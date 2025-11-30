@@ -37,9 +37,11 @@ const AddCoffee = () => {
         if (data.insertedId) {
           //   alert("Coffee Added Successfully");
           Swal.fire({
-            title: "Coffee Added Successfully!",
+            position: "top-end",
             icon: "success",
-            draggable: true,
+            title: "Coffee Added Successfully",
+            showConfirmButton: false,
+            timer: 1500,
           });
           //   form.reset()
         }
