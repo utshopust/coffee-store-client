@@ -1,17 +1,33 @@
 import React from "react";
 
 const AddCoffee = () => {
-    const handleAddCoffee = e =>{
-        e.preventDefault()
-        const form = e.target;
-        const name = form.name.value;
-        const chef = form.chef.value;
-        const supplier = form.supplier.value;
-        const taste = form.taste.value;
-        const category = form.category.value;
-        const details = form.details.value;
-        console.log(name,chef,supplier,taste,category,details);
-    }
+  const handleAddCoffee = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const quantity = form.quantity.value;
+    const supplier = form.supplier.value;
+    const taste = form.taste.value;
+    const category = form.category.value;
+    const details = form.details.value;
+    const photo = form.photo.value;
+    const newCoffee = { name, quantity, supplier, taste, category, details,photo };
+    console.log(newCoffee);
+
+    // Send Coffee Data To The DB
+
+    fetch("http://localhost:3000/coffees",{
+        method: 'POST',
+        headers: {
+            "content-type": 'application/json'
+        },
+        body: JSON.stringify(newCoffee)
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('After Adding Coffee To DB',data);
+      });
+  };
   return (
     <div className="p-24">
       <div className="p-12 text-center space-y-4">
@@ -35,12 +51,12 @@ const AddCoffee = () => {
             />
           </fieldset>
           <fieldset className="fieldset bg-base-200 border-base-300 rounded-box  border p-4">
-            <label className="label">Chef</label>
+            <label className="label">Quantity</label>
             <input
               type="text"
-              name="chef"
+              name="quantity"
               className="input w-full"
-              placeholder="Enter coffee chef "
+              placeholder="Enter coffee Quantity "
             />
           </fieldset>
           <fieldset className="fieldset bg-base-200 border-base-300 rounded-box  border p-4">
@@ -89,7 +105,11 @@ const AddCoffee = () => {
             placeholder="Enter Photo URL"
           />
         </fieldset>
-        <input type="submit" value="Add Coffee"  className="btn w-full bg-yellow-500"/>
+        <input
+          type="submit"
+          value="Add Coffee"
+          className="btn w-full bg-yellow-500"
+        />
       </form>
     </div>
   );
