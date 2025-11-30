@@ -1,4 +1,5 @@
 import React from "react";
+import Swal from "sweetalert2";
 
 const AddCoffee = () => {
   const handleAddCoffee = (e) => {
@@ -8,24 +9,40 @@ const AddCoffee = () => {
     const quantity = form.quantity.value;
     const supplier = form.supplier.value;
     const taste = form.taste.value;
-    const category = form.category.value;
+    const price = form.price.value;
     const details = form.details.value;
     const photo = form.photo.value;
-    const newCoffee = { name, quantity, supplier, taste, category, details,photo };
+    const newCoffee = {
+      name,
+      quantity,
+      supplier,
+      taste,
+      price,
+      details,
+      photo,
+    };
     console.log(newCoffee);
 
     // Send Coffee Data To The DB
 
-    fetch("http://localhost:3000/coffees",{
-        method: 'POST',
-        headers: {
-            "content-type": 'application/json'
-        },
-        body: JSON.stringify(newCoffee)
+    fetch("http://localhost:3000/coffees", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newCoffee),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log('After Adding Coffee To DB',data);
+        if (data.insertedId) {
+          //   alert("Coffee Added Successfully");
+          Swal.fire({
+            title: "Coffee Added Successfully!",
+            icon: "success",
+            draggable: true,
+          });
+          //   form.reset()
+        }
       });
   };
   return (
@@ -78,12 +95,12 @@ const AddCoffee = () => {
             />
           </fieldset>
           <fieldset className="fieldset bg-base-200 border-base-300 rounded-box  border p-4">
-            <label className="label">Category</label>
+            <label className="label">Price</label>
             <input
               type="text"
-              name="category"
+              name="price"
               className="input w-full"
-              placeholder="Enter Coffee Category"
+              placeholder="Enter Coffee Price"
             />
           </fieldset>
           <fieldset className="fieldset bg-base-200 border-base-300 rounded-box  border p-4">
