@@ -54,7 +54,7 @@ const SignUp = () => {
                 showConfirmButton: false,
                 timer: 1500,
               });
-              e.target.reset();
+              // e.target.reset();
             }
           });
       })
