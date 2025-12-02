@@ -16,13 +16,26 @@ const SignUp = () => {
     const address = e.target.address.value;
     const phone = e.target.phone.value;
     const photo = e.target.photo.value;
-    const userProfile = { name, address, phone, photo };
-    console.log(userProfile);
+    // follow line 26
+
     // Create User in the Firebase
 
     createUser(email, password)
       .then((result) => {
         console.log(result.user);
+        const creationTime = result.user?.metadata?.creationTime;
+        const lastSignInTime = result.user?.metadata?.lastSignInTime;
+
+        const userProfile = {
+          name,
+          email,
+          address,
+          phone,
+          photo,
+          creationTime,
+          lastSignInTime,
+        };
+        console.log(userProfile);
         // save profile info into DB
         fetch("http://localhost:3000/users", {
           method: "POST",
@@ -41,6 +54,7 @@ const SignUp = () => {
                 showConfirmButton: false,
                 timer: 1500,
               });
+              e.target.reset();
             }
           });
       })
