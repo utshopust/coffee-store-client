@@ -31,7 +31,7 @@ const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
               });
               // Remove the Coffee From The State
               const remainingCoffees = coffees.filter((cof) => cof._id !== _id);
-              setCoffees(remainingCoffees)
+              setCoffees(remainingCoffees);
             }
           });
       }
